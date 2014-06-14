@@ -1,6 +1,7 @@
 package org.academicode.tipcalculator;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,11 @@ import android.widget.EditText;
 
 public class Main extends Activity implements OnClickListener{
 
+	private static final String TAG_DEBUG = Main.class.getName();
+	
+	public static final String TAG_TIP = "tag";
+	public static final String TAG_GRAND_TOTAL = "total";
+	
 	private EditText et;
 	
 	private Button button10;
@@ -37,10 +43,50 @@ public class Main extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		
-		// Calculate the tip
+		double tipPercent = 0.0d;
 		
-		// Pass tip information to result Activity.
+		switch(v.getId()){
 		
-		// Launch the result Activity.
+			case R.id.tip10 :{
+				
+				tipPercent = 0.10d;
+				
+				break;
+			}
+			case R.id.tip15 :{
+				
+				tipPercent = 0.15d;
+				
+				break;
+			}
+			case R.id.tip20 :{
+				
+				tipPercent = 0.20d;
+				
+				break;
+			}
+			default :{
+				
+				break;
+			}
+		}
+		
+		launchResultActivity(Double.parseDouble(et.getText().toString()), tipPercent);
+	}
+	
+	private void launchResultActivity(double total, double tipPercent){
+		
+		double tip = total * tipPercent;
+		double grandTotal = total + tip;
+		
+		Intent resultActivity = new Intent(Main.this, Result.class);
+		
+		resultActivity.putExtra(TAG_TIP, tip);
+		resultActivity.putExtra(TAG_GRAND_TOTAL, grandTotal);
+		
+		Log.d(TAG_DEBUG, "Tip: " + tip);
+		Log.d(TAG_DEBUG, "Grand Total: " + grandTotal);
+		
+		startActivity(resultActivity);
 	}
 }
