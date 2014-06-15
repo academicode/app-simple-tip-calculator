@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Main extends Activity implements OnClickListener{
 
@@ -69,6 +70,14 @@ public class Main extends Activity implements OnClickListener{
 				
 				break;
 			}
+		}
+		
+		String text = et.getText().toString();
+		
+		if(text.equals("")){
+			
+			Toast.makeText(Main.this, getResources().getString(R.string.error_et), Toast.LENGTH_LONG).show();
+			return;
 		}
 		
 		launchResultActivity(Double.parseDouble(et.getText().toString()), tipPercent);
